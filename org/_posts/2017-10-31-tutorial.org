@@ -1,0 +1,14 @@
+#+STARTUP: showall indent
+#+STARTUP: hidestars
+#+BEGIN_EXPORT html
+---
+layout: default
+title: Tutorial
+excerpt: tutorial on org
+---
+#+END_EXPORT
+It is a sentence
+
+#+BEGIN_SRC python
+np.array([1,2,3])
+#+END_SRC

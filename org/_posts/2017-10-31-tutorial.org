@@ -1,14 +1,29 @@
+#+OPTIONS: toc:nil num:nil
 #+STARTUP: showall indent
 #+STARTUP: hidestars
 #+BEGIN_EXPORT html
 ---
 layout: default
-title: Tutorial
+title: Emacs/org-mode => Jekyll
 excerpt: tutorial on org
 ---
 #+END_EXPORT
-It is a sentence
 
-#+BEGIN_SRC python
-np.array([1,2,3])
+* This is a header
+** This is a subheader
+*** This is a subsubheader
+* This is another section
+Jekyll templates expect layout information. We use =#+BEGIN_EXPORT html=
+environment to directly write the following lines into the compiled HTML file.
+#+BEGIN_SRC
+#+BEGIN_EXPORT html
+---
+layout: default
+title: Emacs/org-mode => Jekyll
+excerpt: tutorial on org
+---
+#+END_EXPORT
 #+END_SRC
+
+Math environment is supported using by MathJax:
+\[\sin x = \sum_{k \text{ odd}} (-1)^{(k-1)/2}\frac {x^k}{k!}\]

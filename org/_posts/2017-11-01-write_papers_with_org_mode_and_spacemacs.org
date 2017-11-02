@@ -1,0 +1,62 @@
+#+OPTIONS: toc:nil num:nil
+#+STARTUP: showall indent
+#+STARTUP: hidestars
+#+BEGIN_EXPORT html
+---
+layout: default
+title: Write Paper With Spacemacs and Org Mode
+excerpt: This tutorial talks about how to write paper with spacemacs and org mode
+---
+#+END_EXPORT
+
+* Rationale
+- Spacemacs makes Emacs set up easy.
+- Latex becomes unreadable by humans quickly.
+- Learning org-mode once, and you do not need to worry about Markdown, HTML,
+  Latex set up in a lot of cases. You also get todo lists, calendars,
+  coffee makers (maybe not), etc.
+
+* Prerequisites
+- Know and like [[https://www.gnu.org/software/emacs/][Emacs]]. This is really not the place to learn Emacs from scratch.
+- Basic understanding of Latex. If you are reading this post, you probably have
+  already written tons of Latex.
+- [[http://spacemacs.org/][Spacemacs]] installed properly.
+- Latex compilers installed.
+
+* Preparations
+** Conventions
+- I will use =C-x= for "Ctrl + x", =C-X= for "Ctrl + Shift + x", =M-x= for
+  "Alt + x", etc.
+- Notice in VIM mode, =SPC SPC= is equivalent to =M-x=. Both allow you to
+  execute a Elisp command.
+- I will use =SPC= for the space key.
+** Install =latex= and =org= layers
+If you already know spacemacs setup, you can skip this section. 
+
+In Spacemacs, =SPC f e d= to open the =.spacemacs= file. This is the Spacemacs
+configuration file, normally located at =~/.spacemacs=. Locate the variable
+=dotspacemacs-configuration-layers=, ignoring the comments, it should look
+somewhat like the following:
+#+BEGIN_SRC lisp
+dotspacemacs-configuration-layers
+'()
+#+END_SRC
+Adding the required layers here. We need =latex=, =bibtex=, and =org=.
+#+BEGIN_SRC lisp
+dotspacemacs-configuration-layers
+'(
+  latex
+  bibtex
+  org
+  ;; other layers go here
+  )
+#+END_SRC
+Now =SPC q r= to restart Spacemacs and install the layers.
+** Create your paper
+Find your favorite place in the file system and create a new folder. The files
+we will be editing has a =.org= suffix. I will use =paper.org= in the rest of
+this post.
+
+* Hello Org-mode
+TO BE CONTINUED...
+[[/assets/google.png]]

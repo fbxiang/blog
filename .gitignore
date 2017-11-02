@@ -2,4 +2,6 @@ _site
 .sass-cache
 .jekyll-metadata
 jekyll/*.html
-/jekyll/_posts/2017-10-31-tutorial.html
+jekyll/_posts/*
+jekyll/assets/*
+/jekyll/Gemfile.lock

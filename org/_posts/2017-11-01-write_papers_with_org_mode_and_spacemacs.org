@@ -167,8 +167,8 @@ Now we need to create a =.bib= file to hold the references. You can find out
 more about bibtex [[http://www.bibtex.org/Format/][here]]. Lets call the =.bib= file =ref.bib=. Now at the end of
 =paper.org=, add the following lines
 #+BEGIN_SRC
-bibliographystyle:ieeetr
-bibliography:ref.bib
+,bibliographystyle:ieeetr
+,bibliography:ref.bib
 #+END_SRC
 The first line tells the bibtex to use IEEE style. You can also change it to
 other styles. The bibliography will not work until you provide a correct style.
@@ -183,3 +183,38 @@ want and press =c= to copy or =C= to copy and close the search window. Now go to
 Now go back to =paper.org=, press =C-c ]= again. This time you will see the
 entry you just saved is displayed. Press enter to insert it at any place. Export
 the file to pdf and all references are magically generated.
+* Code
+Code for =paper.org=
+#+BEGIN_SRC
+  ,#+TITLE: Demo Paper
+  ,#+AUTHOR: Demo author
+  ,#+OPTIONS: toc:nil num:nil
+  ,#+LATEX_HEADER: \usepackage[top=0.5in]{geometry}
+  ,#+LATEX_HEADER: {\setlength{\parindent}{0cm}
+
+  ,* This is a section
+  ,** This is a subsection
+     1. enumerate item 1
+     2. enumerate item 2
+     3. enumerate item 3
+        - itemize item 1
+        - itemize item 2
+        - itemize item 3
+     ,*bold*, /italic/, =code=
+  ,** This is a reference cite:Nobody
+  ,bibliographystyle:ieeetr
+  ,bibliography:ref.bib
+#+END_SRC
+
+Code for =ref.bib=
+#+BEGIN_SRC bibtex
+@misc{ Nobody,
+       author = "Nobody",
+       title = "Article",
+       year = "2017" }
+#+END_SRC
+
+Here is an image of the generated pdf document.
+#+BEGIN_EXPORT html
+<img style="border: solid black 1px;" src="{{site.baseurl}}/assets/paper_demo.png" alt="paper_demo.png"/>
+#+END_EXPORT

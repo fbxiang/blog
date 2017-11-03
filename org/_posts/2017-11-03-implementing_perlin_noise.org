@@ -1,0 +1,75 @@
+#+OPTIONS: toc:nil num:nil
+#+STARTUP: showall indent
+#+STARTUP: hidestars
+#+BEGIN_EXPORT html
+---
+layout: default
+title: Implementing 2D Perlin Noise
+excerpt: This post talks about Perlin noise implementation in javascript.
+---
+#+END_EXPORT
+
+* What to expect
+I will talk about what Perlin noise is and how it is used. For simplicity, I
+will only talk about the 2D case. I will mostly focus on the mathematical
+description with a simple implementation in Javascript.
+
+There are already tons of great posts on Perlin noise. Here are some examples,
+http://flafla2.github.io/2014/08/09/perlinnoise.html,
+[[http://lodev.org/cgtutor/randomnoise.html]]
+
+These are recommended but not required to understand this post. They are also
+themed for programmers. I want to give a theoretical view of the algorithms
+so that math people (like me) and monkeys can understand them.
+
+* Background
+** What is Perlin noise
+*Perlin noise* is an algorithm used to generate natural looking objects, clouds,
+ terrain, hand writing, etc. If you want to *generate* the nature, this is the
+ right thing for you.
+
+** Application of Perlin noise
+- Minecraft uses modified 3D Perlin noise for its terrain generation. Starbound
+  used 2D Perlin noise, and here is a great post describing the method
+  [[https://playstarbound.com/october-27th-caves/]].
+
+* Algorithm description
+Perlin noise is based on random "gradients" at grid points. Ultimately, N-dimensional
+Perlin noise is a function 
+\[P: \mathbb{R}^N \to \mathbb{R}\]
+
+This function assigns a "height" to each point in the N-dimensional space. In 2D,
+it is also known as a height map. Of course, we can see the function needs be
+smooth to make sense.
+
+For simplicity, I will describe the procedure in 2D. If you are interested in
+higher dimensional Perlin noise, you can simply replace "2" in the following
+context with "N", replace "line" with "hyper plane", replace "circle" with
+"hyper sphere", etc.
+
+First, we divide the $xy$ plane into a grid with vertical and horizontal lines
+at integer coordinates. Each point with integer coordinates is called a *grid
+point*. We can see $\mathbb{Z}^2$ the set of all grid points.
+
+At each grid point, we randomly assign a "gradient" to the point. The "gradient"
+here is not the same gradient as in calculus, but it has similar purposes. The
+random function we take here maps anything uniformly at random to the unit
+circle $C$.
+\[C=\{(x,y)\in \mathbb{R}^2: x^2 + y^2 = 1\}\]
+
+We use $g$ for the function that maps $\mathbb{Z}^2$ to $C$.
+\[g: \mathbb{Z}^2\to C\]
+
+Now we fill in the place inside the grid. Consider a single grid with 4 corner
+points, $(x_1, y_1)$, $(x_1, y_2)$, $(x_2, y_1)$, $(x_2, y_2)$, and a point
+$(x,y)$ inside this grid. Let $v_{ij}=g(x_i, y_j)$ representing the gradient at
+$(x_i, y_j)$. 
+
+We first decide that for each grid point, if its gradient is "pointing roughly at" $(x,y)$, it wants
+to raise $(x,y)$, otherwise it wants to lower it. This is captured by the dot
+product. Let $h_{ij}$ represent how much $(x_i, y_j)$ wants to raise $(x,y)$. We
+have 
+\[h_{ij}=v_{ij}^T \begin{bmatrix}x-x_i \\ y-y_j\end{bmatrix}\]
+
+We then make the second decision: If $(x_i,y_j)$ is farther away from $(x, y)$,
+it has less effect on the height of $(x,y)$.

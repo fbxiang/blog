@@ -167,8 +167,8 @@ Now we need to create a =.bib= file to hold the references. You can find out
 more about bibtex [[http://www.bibtex.org/Format/][here]]. Lets call the =.bib= file =ref.bib=. Now at the end of
 =paper.org=, add the following lines
 #+BEGIN_SRC
-,bibliographystyle:ieeetr
-,bibliography:ref.bib
+bibliographystyle:ieeetr
+bibliography:ref.bib
 #+END_SRC
 The first line tells the bibtex to use IEEE style. You can also change it to
 other styles. The bibliography will not work until you provide a correct style.
@@ -202,8 +202,8 @@ Code for =paper.org=
         - itemize item 3
      ,*bold*, /italic/, =code=
   ,** This is a reference cite:Nobody
-  ,bibliographystyle:ieeetr
-  ,bibliography:ref.bib
+  bibliographystyle:ieeetr
+  bibliography:ref.bib
 #+END_SRC
 
 Code for =ref.bib=

@@ -5,3 +5,4 @@ jekyll/*.html
 jekyll/_posts/*
 jekyll/assets/*
 /jekyll/Gemfile.lock
+**/ltximg

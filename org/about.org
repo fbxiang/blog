@@ -7,6 +7,7 @@ excerpt: This is Fanbo Xiang's Blog
 ---
 #+END_EXPORT
 
-This site is my personal blogging site. I will post practical guides for some
-algorithms and set-ups. You can find more about me at [[http://www.fbxiang.com]] and
-contact me at [[mailto:xiangfanbo@gmail.com][xiangfanbo@gmail.com]].
+This site is my personal blogging site. It is created with [[https://jekyllrb.com/][Jekyll]] and Emacs
+org-mode html utilities. I will post practical guides for some algorithms and
+set-ups. You can find more about me at [[http://www.fbxiang.com]] and contact me at
+[[mailto:xiangfanbo@gmail.com][xiangfanbo@gmail.com]].

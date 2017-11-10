@@ -100,6 +100,11 @@ Next we perform another linear interpolation between $h_1, h_2$.
 
 \[h = \mbox{lerp}(h_1, h_2, x - x_1)\]
 
+#+BEGIN_EXPORT html
+<img src="{{site.baseurl}}/assets/perlin_grid.svg" alt="perlin_grid.svg"/>
+#+END_EXPORT
+
+
 And finally we set $P(x,y) = h$. Now we have properly defined $P$. We call this
 $P$ the generated Perlin noise.
 
@@ -178,7 +183,7 @@ For simplicity, I assume we already have a hash function that generates integers
 in range $[0,255]$ based on coordinates. Call this function $hash(x,y)$. Such
 function can be found in the [[https://github.com/ckknight/random-js][random-js]] package. For example, you can do
 #+BEGIN_SRC typescript
-Random(Random.engines.mt19937().seedWithArray([x,y,42]).integer(0, 255);
+Random(Random.engines.mt19937().seedWithArray([x,y,42])).integer(0, 255);
 #+END_SRC
 Now we generate a look up table for the circle.
 #+BEGIN_SRC typescript
@@ -216,7 +221,7 @@ function noise(x: number, y: number, g: (x: number, y: number) => number[]) {
   const h1 = lerp(h11, h12, y-y1);
   const h2 = lerp(h21, h22, y-y1);
   const h = lerp(h1, h2, x-x1);
-  // Yes, I know there are a a lot to improve. Here I just stick to the math.
+  // Yes, I know there is a lot to improve. Here I just stick to the math.
 
   return h;
 }
@@ -238,7 +243,9 @@ function superimposedNoise(
 }    
 #+END_SRC
 Now you just need to find some parameters, discretize the plane, and feed each
-point in the discretized plane into the function.
+point in the discretized plane into the function. The drawing details will not
+be discussed here. You should be able to learn it from any computer graphics
+tutorial.
 
 * Demo
 Here is some terrain I generated with the algorithm. The sky box is found

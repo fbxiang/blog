@@ -1,0 +1,49 @@
+.site-header {
+  background-color: #CCBF95;
+  width: 100vw;
+  overflow-x: hidden;
+  height: auto;
+}
+
+.site-header-container {
+  max-width: 1000px;
+  margin: auto;
+  padding: 0 5vw 25px;
+}
+
+.site-nav {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.site-title {
+  color: #FFFAE6;
+  font-family: $title-font;
+  font-size: 4em;
+  text-align: center;
+  margin: auto;
+}
+
+.site-subtitle {
+  display: block;
+  color: black;
+  font-family: $subtitle-font;
+  font-size: 1.3em;
+  font-weight: bold;
+  text-align: center;
+  margin: auto;
+}
+
+.page-link {
+  font-family: $button-font;
+  padding: 10px 20px;
+  text-align: center;
+  min-width: 80px;
+  font-size: 1.1em;
+  border-radius: 4px;
+  transition: all 0.5s;
+}
+
+.page-link:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}

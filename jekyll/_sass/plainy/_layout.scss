@@ -94,3 +94,54 @@
   background: #eee;
 }
 
+.site-footer {
+  padding: 5px 0;
+  background-color: #CCBF95;
+  width: 100vw;
+}
+
+.footer-heading {
+  font-family: $title-font;
+  font-size: 2em;
+}
+
+.site-footer .wrapper {
+  display: block;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.footer-col-wrapper {
+  display: flex;
+  flex-direction: row;
+}
+
+.footer-col {
+  width: 33.3%;
+  font-family: $article-font;
+}
+
+.footer-col a:hover {
+  text-decoration: underline;
+}
+
+.page-content {
+  background: #F5F1ED;
+  padding: 20px;
+}
+
+.content-wrapper {
+  margin: auto;
+  max-width: 800px;
+  padding: 5px 40px;
+  background: white;
+}
+
+.content-wrapper img {
+  max-width: 100%;
+}
+
+.content-wrapper a {
+  text-decoration: underline;
+  color: darkred;
+}

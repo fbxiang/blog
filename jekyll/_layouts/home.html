@@ -1,18 +1,30 @@
----
-layout: default
----
+<!DOCTYPE html>
+<html lang="{{ page.lang | default: site.lang | default: "en" }}">
+  {% include head.html %}
 
-<div class="home">
+  <body>
 
-  {{ content }}
+    {% include header.html %}
 
-  <div class="post-list">
-    {% for post in site.posts %}
-    <a class="post-item" href="{{ post.url | relative_url }}">
-      <div class="post-meta">{{ post.date | date: "%Y-%m-%d" }}</div>
-      <div class="post-link">{{ post.title | escape }}</div>
-      <div class="post-info">{{ site.author | escape }}</div>
-    </a>
-    {% endfor %}
-  </div>
-</div>
+    <main aria-label="Content">
+      <div class="home">
+
+        {{ content }}
+
+        <div class="post-list">
+          {% for post in site.posts %}
+          <a class="post-item" href="{{ post.url | relative_url }}">
+            <div class="post-meta">{{ post.date | date: "%Y-%m-%d" }}</div>
+            <div class="post-link">{{ post.title | escape }}</div>
+            <div class="post-info">{{ site.author | escape }}</div>
+          </a>
+          {% endfor %}
+        </div>
+      </div>
+    </main>
+
+    {% include footer.html %}
+
+  </body>
+
+</html>

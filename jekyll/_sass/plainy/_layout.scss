@@ -10,7 +10,7 @@
 .site-header-container {
   max-width: 1000px;
   margin: auto;
-  padding: 0 5vw 25px;
+  padding: 4px 10px 25px;
 }
 
 .site-nav {
@@ -95,7 +95,6 @@
 }
 
 .site-footer {
-  padding: 5px 0;
   background-color: #CCBF95;
   width: 100vw;
 }
@@ -109,16 +108,26 @@
   display: block;
   max-width: 1200px;
   margin: auto;
+  padding: 5px 5vw;
 }
 
 .footer-col-wrapper {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+
+  @media screen and (min-width: $break-small) {
+    flex-direction: row;
+  }
 }
 
 .footer-col {
-  width: 33.3%;
   font-family: $article-font;
+  margin: 5px 0;
+
+  @media screen and (min-width: $break-small) {
+    width: 33.3%;
+    flex-direction: row;
+  }
 }
 
 .footer-col a:hover {
@@ -135,16 +144,20 @@
   list-style-type: none;
 }
 
+.site-bottom-line {
+  background-color: #867067;
+  height: 10px;
+}
+
 .page-content {
   background: #F5F1ED;
-  padding: 20px;
-  font-size: 12pt;
+  padding: 2vw;
 }
 
 .content-wrapper {
   margin: auto;
   max-width: 800px;
-  padding: 5px 40px;
+  padding: 2vh 2vw;
   background: white;
 }
 

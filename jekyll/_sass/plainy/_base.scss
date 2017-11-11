@@ -9,19 +9,15 @@ a {
   color: inherit;
 }
 
-ul {
-  list-style-type: none;
-  padding: 0;
-  margin: 1em;
-}
-
-li {
-  list-style-type: none;
-}
-
 pre {
   overflow-x: auto;
   background-color: #EAF2F7;
   padding: 10px;
 }
 
+code {
+  background-color: #EEEEFF;
+  padding: 1px 5px;
+  margin: 0.2em;
+  border-radius: 3px;
+}

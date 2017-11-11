@@ -125,9 +125,20 @@
   text-decoration: underline;
 }
 
+.site-footer ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 1em;
+}
+
+.site-footer li {
+  list-style-type: none;
+}
+
 .page-content {
   background: #F5F1ED;
   padding: 20px;
+  font-size: 12pt;
 }
 
 .content-wrapper {

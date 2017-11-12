@@ -7,7 +7,6 @@ layout: default
 title: Implementing 2D Perlin Noise
 excerpt: This post talks about Perlin noise implementation in javascript.
 ---
-<h1>Implementing 2D Perlin Noise</h1>
 #+END_EXPORT
 
 * What to expect

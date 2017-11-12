@@ -1,7 +1,7 @@
 #+OPTIONS: toc:nil num:nil
 #+BEGIN_EXPORT html
 ---
-layout: page
+layout: info
 title: About
 excerpt: This is Fanbo Xiang's Blog
 ---

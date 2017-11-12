@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="{{ page.lang | default: site.lang | default: "en" }}">
   <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>
   {% include head.html %}
 
   <body>
@@ -8,8 +11,17 @@
     {% include header.html %}
 
     <main class="page-content" aria-label="Content">
-      <div class="content-wrapper">
+      <div class="content-side-left"></div>
+      <div class="content-wrapper" id="content">
+        {% if page.title %}
+        <h1>{{ page.title | escape}}</h1>
+        {% endif %}
         {{ content }}
+      </div>
+      <div class="content-side-right">
+        <div class="toc" id="toc">
+          <h2>Table of Content</h2>
+        </div>
       </div>
     </main>
 
@@ -17,4 +29,19 @@
 
   </body>
 
+  <script>
+    var toc = $('#toc');
+    var count = 0;
+    $('#content').find('h2,h3,h4').each(function(i,l) {
+      var h = $(l);
+      console.log;
+      var id = "title_" + count++;
+      h.attr('id', id);
+      toc.append($('<a/>')
+          .attr('href', '#'+id)
+          .text(h.text())
+          .css('margin-left', (Number(h[0].nodeName[1])-2) * 10 + 'px')
+        );
+    });
+  </script>
 </html>

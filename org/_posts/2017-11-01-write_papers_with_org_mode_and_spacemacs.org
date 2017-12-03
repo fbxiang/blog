@@ -5,6 +5,7 @@
 ---
 layout: default
 title: Write Paper With Spacemacs and Org Mode
+comments: true
 excerpt: This tutorial talks about how to write paper with spacemacs and org mode
 ---
 #+END_EXPORT

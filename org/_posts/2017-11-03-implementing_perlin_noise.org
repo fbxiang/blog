@@ -236,7 +236,7 @@ function superimposedNoise(
     frequencies: number[],
     hashFunctions: ((x: number, y: number) => number[])[]) {
   let s = 0;
-  for (let i = 0; i < amplitudes; i++) {
+  for (let i = 0; i < amplitudes.length(); i++) {
     s += amplitudes[i] * noise(frequencies[i] * (x - translationXs[i]), frequencies[i] * (y - translationYs[i]), hashFunctions[i]);
   }
   return s;

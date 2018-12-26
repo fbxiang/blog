@@ -1,0 +1,198 @@
+#+OPTIONS: toc:nil
+#+STARTUP: showall indent
+#+STARTUP: hidestars
+#+BEGIN_EXPORT html
+---
+layout: default
+title: Microfacet Rough Surface Reflection
+comments: true
+excerpt: This post talks about rendering rough reflective surface
+---
+#+END_EXPORT
+
+* Background
+I write this post mainly to keep a reference for myself. Looking into papers
+and deriving formulae are not very easy to do so I will write a concise
+version here.
+
+** BRDF
+This post assumes understanding of BRDF, rendering equation, and simple
+geometric optics in general. Any online graphics course will have the topics
+covered.
+   
+This post will focus on the Cook-Torrance model (see [[https://en.wikipedia.org/wiki/Specular_highlight#Cook%E2%80%93Torrance_model][Wikipedia page]]). I will
+talk about how it is derived.
+
+** Rendering equation
+The rendering equation relates the light going into an object and light going
+out of the object. If we assume there is only reflection on the surface (no
+refraction or subsurface scattering), and we do not consider motion blur and
+light wavelength. We have the following rendering equation.
+
+\[L_o(x, \omega_o) = L_e(x, \omega_o) + \int_\Omega f(x, \omega_i,
+  \omega_r)L_i(x, \omega_i)\cos(\theta)d\omega_i \]
+
+where $x$ is a point on object surface, $\omega_o$ is the out-going direction of
+light, and $L_o$ is the out-going radiance (or brightness) of the surface point
+$x$ viewed from angle $\omega_o$. $L_e$ is the emission term. Next, the integral
+is over the sphere centered at surface normal describing how input light is
+reflected. $f$ is the BRDF, $L_i$ is the input radiance at $x$ from $\omega_i$.
+$\theta$ is the angle between $\omega_i$ and normal $\cos(\theta) = n \cdot
+\omega_i$ where $n$ is the surface normal.
+   
+* Description
+** Cook-Torrance microfacet specular BRDF
+Microfacet model assumes the roughness of object comes from very small specular
+facets on object surface with various orientations. The BRDF for this model is
+given by 
+
+\[f(i, o) = \frac{D(h)F(o,h)G(i,o,h)}{4|n\cdot i||n\cdot o|}\]
+
+where $i$ and $o$ are in and out direction respectively. $h$ is the half vector
+between $i$ and $o$. $D(h)$ is a term relevant to the microfacet orientation
+distribution. $F(o,h)$ is the Fresnel term accounting for Fresnel effect.
+$G(o,i,h)$ is a geometric term concerning shadowing and visibility of
+microfacets.
+
+Here $h$ is an important vector. In specular reflection, only when the normal
+aligns with $h$, the input light reflects to the output direction.
+
+** Microfacet distribution
+To describe the distribution of microfacets is to describe the distribution of
+their normals. We write the PDF of this "distribution" to be $D(m)$ where $m$
+describes a direction in space. Note this distribution is not a probability
+distribution. $D(m)$ can be interpreted as the microfacet area density given a
+unit surface area. The distribution has the following constraints:
+
+1. $D(m)$ is always non-negative.
+2. Total microfacet area is greater than surface
+   area.
+   \[\int D(m) d\omega_m >= 1\]
+3. Projected microfacet area equals surface area.
+   \[\int D(m)(m\cdot n) d\omega_m = 1\]
+   
+In fact 2 can be deduced from 1 and 3.
+
+** Shadowing-Masking function
+To describe how microfacets blocks each other, function $G(i,o,m)$ is
+introduced. $G$ can be interpreted as the fraction of microfacets with normal
+$m$ visible from direction $i$ and $o$. It has the following properties:
+
+1. $G$ is a fraction.
+   \[0\leq G(i,o,m)\leq 1\]
+2. $G$ is symmetric w.r.t. $i$ and $o$.
+   \[G(i,o,m) = G(o,i,m)\]
+# TODO: add the case for $G=0$ here
+
+** Fresnel
+Fresnel effect is common in dielectric material. It is extensively studied in
+physics and there are several formulations. According to Cook and Torrance, we
+can take
+\[F(o,h) =
+\frac{1}{2}\frac{(g-c)^2}{(g+c)^2}(1+\frac{(c(g+c)-1)^2}{(c(g-c)+1)^2})\] 
+where
+\[c=o\cdot h\] \[g^2=n^2+c^2-1\]
+$n$ is the index of fraction.
+
+** Derivation of general microfacet model
+*** Power from macroscopic perspective
+We first assume the surface does not emit light, we want to derive the BRDF $f$
+in the rendering equation. We also assume the BRDF only depends on the surface
+normal so we can drop the dependency on position $x$. Now the rendering equation
+becomes
+
+\[L_o(o) = \int_\Omega f(i, o, n)L_i(i)(n\cdot i)d\omega_i \]
+
+Here we also compute the total energy (power) over the surface. By definition,
+it is
+
+\[P = \int_A \int_\Omega L_o(o) d\omega_o dA = \int_A \int_\Omega \int_\Omega
+f(i, o, n)L_i(i)(n\cdot i) d\omega_i (n\cdot o) d\omega_o dA\]
+
+Clean up $P$,
+
+\[P = \int_A \int_\Omega \int_\Omega f(i, o, n)L_i(i)(n\cdot i)(n\cdot o) d\omega_i
+ d\omega_o dA\]
+
+*** Power from microfacets
+From another perspective, we can derive $P$ from another perspective. We derive
+$P^{m}$ for each microfacet and add (integrate) them together.
+
+First for easy understanding, let's assume there is a finite number of
+microfacet directions, so $D(m)$ is a "mass function" instead of a "density
+function". Now $D(m)$ is the ratio between area of microfacet $m$ and the total
+surface area $A$. Let $\delta D(m)$ denote the total area of microfacet $m$. We
+have
+
+\[\delta A^{(m)} = \int_A D(m)dA\]
+
+Let's check $D(m)$ satisfies the requirements. Rule 1 is trivial since area
+ratio is certainly non-negative.
+
+\[\sum_m D(m) (m\cdot n) = \frac{\int_A \sum_m D(m) (m\cdot n) dA}{A} =
+\frac{\sum_m \delta A(m)}{A} = \frac{A}{A} = 1 \]
+
+so it satisfies the requirements described in previous sections.
+
+For a microfacet with normal $m$, given a differential input solid angle
+$\omega_i$ and the associated input direction $i$, its contribution to output is
+$dL_o^{(m)}$ at direction $o$ is
+
+\[dL_o^{(m)}(o) = f^{(m)}(i,o,m)L_i(i)(m\cdot i) d\omega_i\]
+
+Next, part of the input and output radiance is blocked (shadowing-masking). We
+notice scaling $dL_o(o)$ and scaling $L_i(i)$ has the same effect, so this
+effect can be captured by introducing function $G(i,o,m)$, which is the
+shadowing-masking function described above.
+
+\[dL_o^{(m)}(o) = G(i,o,m)f^{(m)}(i,o,m)L_i(i)(m\cdot i) d\omega_i\]
+
+Now we take the integral over the unit sphere to get
+
+\[L_o^{(m)}(o) = \int_\Omega G(i,o,m)f^{(m)}(i,o,m)L_i(i)(m\cdot i) d\omega_i\]
+
+Now we have the radiance formula for a microfacet $m$, we can integrate it to
+find its light energy (power).
+
+\[P^{(m)} = \int_{\delta A^{(m)}} \int_\Omega \int_\Omega
+G(i,o,m)f^{(m)}(i,o,m)L_i(i)(m\cdot i) d\omega_i (m\cdot o) d\omega_o dA \]
+
+Finally we sum over all microfacets to get the total power
+
+\[P = \sum_m P^{(m)} = \sum_m \int_{\delta A^{(m)}} \int_\Omega \int_\Omega
+G(i,o,m)f^{(m)}(i,o,m)L_i(i)(m\cdot i) d\omega_i (m\cdot o) d\omega_o dA \]
+
+Next, we go back and take $D(m)$ to be a distribution function, which is (by
+definition of integration) equivalent to taking infinitely many possible
+directions for the facets. We can repeat the steps above and find
+
+\[P = \sum_m P^{(m)} = \int_\Omega \int_{A} \int_\Omega \int_\Omega
+G(i,o,m)f^{(m)}(i,o,m)L_i(i)(m\cdot i) d\omega_i (m\cdot o) d\omega_o d A^{(m)}
+\omega_m \]
+
+where 
+
+\[dA^{(m)} = D(m)dA\]
+
+Clean up $P$ we get
+
+\[P = \int_A\int_\Omega\int_\Omega\int_\Omega D(m)G(i,o,m)f^{(m)}(i,o,m)
+L_i(i)(m\cdot i)(m\cdot o)d\omega_m d\omega_i d\omega_o dA\]
+
+*** Putting them together
+Notice the $P$ computed from 2 perspective above share some common integrals, so
+we can differentiate both w.r.t $\omega_i$, $\omega_o$, and $A$ and set them
+equal. We get
+
+\[f(i,o,n)(n\cdot i)(n\cdot o) = \int_\Omega D(m)G(i,o,m)f^{(m)}(i,o,m)(m\cdot
+i)(m\cdot o) d\omega_m\]
+
+We finally find out the surface BRDF
+
+\[f(i,o,n) = \int_\Omega D(m)G(i,o,m) \frac{(n\cdot i)(n\cdot o)}{(m\cdot
+i)(m\cdot o)} f^{(m)}(i,o,m) d\omega_m\]
+
+** Derivation of specular microfacet model
+"But where is the important half-vector $h$?" $h$ comes from the assumption that
+each microfacet is perfectly specular. Here we need to generalize $D(m)$ to
+allow the Dirac's delta function(al). 
